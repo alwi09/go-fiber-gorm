@@ -3,10 +3,14 @@ package router
 import (
 	"github.com/gofiber/fiber/v2"
 	"go-fiber-gorm/internal/handler"
+	"gorm.io/gorm"
 )
 
-func RouterInit(router *fiber.App) {
+func RouterInit(router *fiber.App, db *gorm.DB) error {
 
-	router.Get("/GetAllTodo", handler.GetAllTodo)
+	handler := handler.NewTodolistHandlerImpl(db)
 
+	router.Get("/api/GetAllTodo", handler.GetAllTodo)
+
+	return nil
 }
